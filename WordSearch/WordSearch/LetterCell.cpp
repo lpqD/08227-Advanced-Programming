@@ -24,6 +24,7 @@ LetterCell::LetterCell(char UL, char UR, char DL, char DR, char U, char D, char 
 
 LetterCell::~LetterCell()
 {
+
 }
 
 void LetterCell::setCells(char UL, char UR, char DL, char DR, char U, char D, char L, char R)

@@ -19,6 +19,8 @@ public:
 	bool ReadAdvancedPuzzle();
 	bool ReadAdvancedDictionary();
 
+	string ConvertCharToString(char);
+
 	bool SolveSimplePuzzleWithSimpleDictionary();
 	bool SolveSimplePuzzleWithAdvancedDictionary();
 	bool SolveAdvancedPuzzleWithSimpleDictionary();
