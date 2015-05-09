@@ -182,7 +182,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 	{
 		string temp = "";
 		string result = "";
-
+#pragma region HorizontalSearch
 		//begin with checking left to right on each row
 		for (int x = 0; x <= 8; x++)
 		{
@@ -212,7 +212,8 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			}
 			temp = "";
 		}
-
+#pragma endregion HorizontalSearch
+#pragma region VerticalSearch
 		for (int y = 0; y <= 8; y++)
 		{//identical to checking rows, but with X and Y loops swapped to make for vertical checking
 			for (int x = 0; x <= 8; x++)
@@ -241,22 +242,20 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			}
 			temp = "";
 		}
-		
+#pragma endregion VerticalSearch
+#pragma region DiagonalSearch
 		//diagonal loops!
 		int offsetX = 8;
 		int offsetY = 0;
 		int condition = 0;
 		for (int y = 8; y >= 0;)
-		{//y begins at 8
+		{
 			int x = 8;
 			y = 8 + offsetY;
 			x = x - offsetX;
 			
 			for (x; x >= condition; x--)
-			{//x begins at 0
-				
-				//0 = 8 - 8 
-				
+			{
 				temp += grid[y][x];
 				y--;
 			}
@@ -268,7 +267,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			else if (x < 0)
 				offsetX = offsetX - 1;
 
-			#pragma region findwords
+			
 			for (int i = 0; i < DictLength; i++)
 			{
 				string wordToFind = DictList[i];
@@ -280,21 +279,18 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 					cout << DictList[i] << "found at: " << found << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
-				//cout << temp << endl;
+				
 
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
 					cout << DictList[i] << "found at: " << found << endl;
 			}
-			#pragma endregion
+			
 			
 			if (offsetX == 0)
 			{
 				y = 8;
-				//offsetX = 0;
-				//offsetY--;
-				//cout << "offsetY -1" << endl;
 			}
 			if (offsetY == -9)
 			{
@@ -302,22 +298,20 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			}
 			temp = "";
 		}
-		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma endregion 
+#pragma region DiagonalSearch_OtherDirection
 		 offsetX = 8;
 		 offsetY = 0;
 		 condition = 0;
 		 temp = "";
 		for (int y = 0; y <= 8;)
-		{//y begins at 8
+		{
 			int x = 8;
 			y = 0 + offsetY;
 			x = x - offsetX;
 
 			for (x; x >= condition; x--)
-			{//x begins at 0
-
-				//0 = 8 - 8 
-
+			{
 				temp += grid[y][x];
 				y++;
 			}
@@ -330,7 +324,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			else if (x < 0)
 				offsetX = offsetX - 1;
 
-#pragma region findwords
+
 			for (int i = 0; i < DictLength; i++)
 			{
 				string wordToFind = DictList[i];
@@ -349,15 +343,11 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				if (found != string::npos)
 					cout << DictList[i] << "found at: " << found << endl;
 			}
-#pragma endregion
+
 
 			if (offsetX <= 0)
 			{
-				
 				y = 0;
-				//offsetX = 0;
-				//offsetY--;
-				//cout << "offsetY -1" << endl;
 			}
 			if (offsetY == 9)
 			{
@@ -365,53 +355,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 			}
 			temp = "";
 		}
-		
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//diagonal loops!
-		/*
-		offsetX = 8;
-		offsetY = 0;
-
-		condition = 0;
-		int condition2 = 8;
-		int counter = 0;
-
-		for (int y = counter; y < condition2; y++)
-		{
-			for (int x = 0; x > condition; x--)
-			{
-
-			}
-
-
-			#pragma region findwords
-			for (int i = 0; i < DictLength; i++)
-			{
-				string wordToFind = DictList[i];
-				temp.find(wordToFind);
-
-				size_t found = temp.find(wordToFind);
-
-				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
-				//then reverse and check right to left, then move to the next row
-				reverse(temp.begin(), temp.end());
-				//cout << temp << endl;
-
-				temp.find(wordToFind);
-				found = temp.find(wordToFind);
-				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
-			}
-#pragma endregion
-
-
-
-		}
-		*/
-
-
-
+#pragma endregion 
 		temp = "";
 		// Add your solving code here!
 	}
