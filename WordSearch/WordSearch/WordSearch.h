@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <Windows.h>
+#include "LetterCell.h"
+#include "LetterTree.h"
 
 using namespace std;
 
@@ -19,8 +21,6 @@ public:
 	bool ReadAdvancedPuzzle();
 	bool ReadAdvancedDictionary();
 
-	string ConvertCharToString(char);
-
 	bool SolveSimplePuzzleWithSimpleDictionary();
 	bool SolveSimplePuzzleWithAdvancedDictionary();
 	bool SolveAdvancedPuzzleWithSimpleDictionary();
@@ -33,5 +33,6 @@ private:
 	const int NUMBER_OF_RUNS;
 	const string PUZZLE_NAME;
 	const string DICTIONARY_NAME;
+	string RecursiveAdvancedSearch(int, int, int, int, LetterTree*, string);
 };
 

@@ -21,6 +21,9 @@
     <ClCompile Include="WordSearch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LetterTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="wordsearch_grid.txt">
@@ -35,6 +38,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LetterCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LetterTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

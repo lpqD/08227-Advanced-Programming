@@ -1,5 +1,6 @@
 #include "WordSearch.h"
 #include "LetterCell.h"
+#include "LetterTree.h"
 #include <algorithm>
 #include <iterator>
 #include <iostream>
@@ -19,7 +20,7 @@ WordSearch::~WordSearch()
 
 char grid[9][9];
 LetterCell advancedGrid[9][9];
-
+LetterTree rootTree;
 
 string* DictList;
 int DictLength;
@@ -116,11 +117,43 @@ bool WordSearch::ReadSimplePuzzle()//reads the file of the simple puzzle into th
 
 bool WordSearch::ReadAdvancedDictionary()
 {
+	LetterTree* pointer;
+
+	fstream inputFile;//creates the input filestream
+
+	inputFile.open(DICTIONARY_NAME);
+	string input;
+	int length = 0;
+	
+	if (inputFile.is_open())
+	{
+		while (!inputFile.eof())
+		{
+			inputFile >> input;
+			int stringLength = input.length();
+			pointer = &rootTree;
+			for (int i = 0; i < stringLength; i++)
+			{
+				int index = input[i] - 'A';
 
 
+				if (pointer->LetterPointers[index])
+				{
+					pointer = pointer->LetterPointers[index];
+				}
+				else
+				{
+					pointer->LetterPointers[index] = new LetterTree;
+					pointer->LetterPointers[index]->Character = input[i];
+					pointer = pointer->LetterPointers[index];
+				}
 
-
-
+				
+			}
+			pointer->isLast = true;
+			length++;
+		}
+	}
 
 	cout << endl << "ReadAdvancedDictionary() has NOT been implemented" << endl;
 	return true;
@@ -161,15 +194,6 @@ bool WordSearch::ReadSimpleDictionary()
 	return true;
 }
 
-string WordSearch::ConvertCharToString(char c)
-{
-	stringstream stream;
-	string temp;
-	char temp2 = grid[0][0];
-	stream << temp2;
-	stream >> temp;
-	return temp;
-}
 
 bool WordSearch::SolveSimplePuzzleWithSimpleDictionary() 
 {
@@ -186,7 +210,8 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 		//begin with checking left to right on each row
 		for (int x = 0; x <= 8; x++)
 		{
-			for (int y = 0; y <= 8; y++)
+			int y = 0;
+			for (y; y <= 8; y++)
 			{
 				temp += grid[x][y];
 			}
@@ -200,7 +225,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				size_t found = temp.find(wordToFind);
 
 				if (found != string::npos)
-					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
 				cout << temp << endl;
@@ -208,7 +233,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
-					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 			}
 			temp = "";
 		}
@@ -216,7 +241,8 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 #pragma region VerticalSearch
 		for (int y = 0; y <= 8; y++)
 		{//identical to checking rows, but with X and Y loops swapped to make for vertical checking
-			for (int x = 0; x <= 8; x++)
+			int x = 0;
+			for (x; x <= 8; x++)
 			{
 				temp += grid[x][y];
 			}
@@ -230,7 +256,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				size_t found = temp.find(wordToFind);
 
 				if (found != string::npos)
-					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
 				cout << temp << endl;
@@ -238,7 +264,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
-					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 			}
 			temp = "";
 		}
@@ -276,7 +302,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				size_t found = temp.find(wordToFind);
 
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
 				
@@ -284,7 +310,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 			}
 			
 			
@@ -333,7 +359,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				size_t found = temp.find(wordToFind);
 
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
 				cout << temp << endl;
@@ -341,7 +367,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << x << ", " << y << endl << endl;
 			}
 
 
@@ -370,8 +396,51 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 	return false;
 }
 
+string WordSearch::RecursiveAdvancedSearch(int x, int y, int deltaX, int deltaY, LetterTree* pointer, string word)
+{
+	if (x > 9 || x < 0 || y > 9 || y < 0)
+	{
+		return "";
+	}
+
+	char c = grid[x][y];
+
+	if (pointer->LetterPointers[c - 'A'])
+	{
+		if (pointer->LetterPointers[c - 'A']->isLast)
+		{
+			return word + c;
+		}
+		
+		return RecursiveAdvancedSearch(x + deltaX, y + deltaY, deltaX, deltaY, pointer->LetterPointers[c - 'A'], word + c);
+	}
+	return "";
+}
+
+
 bool WordSearch::SolveSimplePuzzleWithAdvancedDictionary() 
 {
+
+	for (int x = 0; x < 9; x++)
+	{
+		for (int y = 0; y < 9; y++)
+		{
+			for (int deltaX = -1; deltaX <= 1; deltaX++)
+			{
+				for (int deltaY = -1; deltaY <= 1; deltaY++)
+				{
+					if (deltaX == 0 && deltaY == 0)
+					{
+						continue;
+					}
+					
+					string word = RecursiveAdvancedSearch(x, y, deltaX, deltaY, &rootTree, "");
+					if (word != "")
+						cout << word << " found at " << x << ", " << y << endl;
+				}
+			}
+		}
+	}
 	cout << endl << "SolveSimplePuzzleWithAdvancedDictionary() has NOT been implemented" << endl;
 	return false;
 }
