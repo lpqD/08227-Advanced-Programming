@@ -1,19 +1,7 @@
 #pragma once
-class LetterCell
+struct LetterCell
 {
-public:
-	LetterCell(char, char, char, char, char, char, char, char);
-
-	void setCells(char, char, char, char, char, char, char, char);
-
-	~LetterCell();
-
-	
-
-
-
-
-
-
+	char Letter;
+	LetterCell* Pointers[8];
 };
 

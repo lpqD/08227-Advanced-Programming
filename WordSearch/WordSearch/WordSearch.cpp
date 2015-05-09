@@ -18,13 +18,77 @@ WordSearch::~WordSearch()
 }
 
 char grid[9][9];
+LetterCell advancedGrid[9][9];
+
 
 string* DictList;
 int DictLength;
 
 bool WordSearch::ReadAdvancedPuzzle()//Will read the file of the Advanced puzzle into the data structure
 {
-	cout << endl << "ReadAdvancedPuzzle() has NOT been implemented" << endl;
+	fstream inputFile;//creates the input filestream
+
+	inputFile.open(PUZZLE_NAME);
+	string input, results;
+	if (inputFile.is_open())
+	{
+		while (!inputFile.eof())
+		{
+			inputFile >> input;
+			results += input;
+		}
+	}
+
+	
+
+	for (int x = 0; x <= 8; x++)
+	{
+		for (int y = 0; y <= 8; y++)
+		{
+			char addition;
+
+			addition = results.at(0);
+
+			advancedGrid[x][y].Letter = addition;
+			
+			int i = 0;
+			for (int deltaX = -1; deltaX <= 1; deltaX++)
+			{
+				
+				for (int deltaY = -1; deltaY <= 1; deltaY++)
+				{
+					
+					if (deltaX == 0 && deltaY == 0)
+					{
+						deltaY += 1;
+					}
+					cout << "X delta = " << deltaX << "    Y delta = " << deltaY << endl;
+
+					if (x + deltaX >= 0 && y + deltaY >= 0 && x + deltaX < 9 && y + deltaY < 9)
+					{
+						int pointX = x + deltaX;
+						int pointY = y + deltaY; 
+						//cout << deltaX << "     " << deltaY << endl;
+						advancedGrid[x][y].Pointers[i] = &advancedGrid[pointX][pointY];
+							
+					}
+					i++;
+				}
+			}
+			
+
+			//cout << grid[x][y];
+			if (results.length() >= 1)
+				results.erase(0, 1);
+		}
+	}
+
+
+
+	//cout << advancedGrid[x][y] << 
+
+
+	cout << endl << "ReadAdvancedPuzzle() IS BEING been implemented" << endl;
 	return true;
 }
 

@@ -78,7 +78,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="LetterCell.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="WordSearch.cpp" />
   </ItemGroup>
