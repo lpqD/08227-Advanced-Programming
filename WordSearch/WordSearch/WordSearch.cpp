@@ -39,8 +39,6 @@ bool WordSearch::ReadAdvancedPuzzle()//Will read the file of the Advanced puzzle
 		}
 	}
 
-	
-
 	for (int x = 0; x <= 8; x++)
 	{
 		for (int y = 0; y <= 8; y++)
@@ -68,27 +66,18 @@ bool WordSearch::ReadAdvancedPuzzle()//Will read the file of the Advanced puzzle
 					{
 						int pointX = x + deltaX;
 						int pointY = y + deltaY; 
-						//cout << deltaX << "     " << deltaY << endl;
 						advancedGrid[x][y].Pointers[i] = &advancedGrid[pointX][pointY];
 							
 					}
 					i++;
 				}
 			}
-			
-
-			//cout << grid[x][y];
 			if (results.length() >= 1)
 				results.erase(0, 1);
 		}
 	}
 
-
-
-	//cout << advancedGrid[x][y] << 
-
-
-	cout << endl << "ReadAdvancedPuzzle() IS BEING been implemented" << endl;
+	//cout << endl << "ReadAdvancedPuzzle() IS BEING been implemented" << endl;
 	return true;
 }
 
@@ -127,6 +116,12 @@ bool WordSearch::ReadSimplePuzzle()//reads the file of the simple puzzle into th
 
 bool WordSearch::ReadAdvancedDictionary()
 {
+
+
+
+
+
+
 	cout << endl << "ReadAdvancedDictionary() has NOT been implemented" << endl;
 	return true;
 }
@@ -193,7 +188,6 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 		{
 			for (int y = 0; y <= 8; y++)
 			{
-			
 				temp += grid[x][y];
 			}
 			cout << temp << endl;
@@ -206,7 +200,7 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				size_t found = temp.find(wordToFind);
 
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << found << endl << endl;
 				//then reverse and check right to left, then move to the next row
 				reverse(temp.begin(), temp.end());
 				cout << temp << endl;
@@ -214,20 +208,129 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				temp.find(wordToFind);
 				found = temp.find(wordToFind);
 				if (found != string::npos)
-					cout << DictList[i] << "found at: " << found << endl;
+					cout << endl << DictList[i] << "found at: " << found << endl << endl;
 			}
 			temp = "";
 		}
 
 		for (int y = 0; y <= 8; y++)
-		{
+		{//identical to checking rows, but with X and Y loops swapped to make for vertical checking
 			for (int x = 0; x <= 8; x++)
 			{
-
 				temp += grid[x][y];
 			}
 			cout << temp << endl;
 
+			for (int i = 0; i < DictLength; i++)
+			{
+				string wordToFind = DictList[i];
+				temp.find(wordToFind);
+
+				size_t found = temp.find(wordToFind);
+
+				if (found != string::npos)
+					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+				//then reverse and check right to left, then move to the next row
+				reverse(temp.begin(), temp.end());
+				cout << temp << endl;
+
+				temp.find(wordToFind);
+				found = temp.find(wordToFind);
+				if (found != string::npos)
+					cout << endl << DictList[i] << "found at: " << found << endl << endl;
+			}
+			temp = "";
+		}
+		
+		//diagonal loops!
+		int offsetX = 8;
+		int offsetY = 0;
+		int condition = 0;
+		for (int y = 8; y >= 0;)
+		{//y begins at 8
+			int x = 8;
+			y = 8 + offsetY;
+			x = x - offsetX;
+			
+			for (x; x >= condition; x--)
+			{//x begins at 0
+				
+				//0 = 8 - 8 
+				
+				temp += grid[y][x];
+				y--;
+			}
+			if (y < 0)
+			{
+				offsetY = offsetY - 1;
+				condition++;
+			}
+			else if (x < 0)
+				offsetX = offsetX - 1;
+
+			#pragma region findwords
+			for (int i = 0; i < DictLength; i++)
+			{
+				string wordToFind = DictList[i];
+				temp.find(wordToFind);
+
+				size_t found = temp.find(wordToFind);
+
+				if (found != string::npos)
+					cout << DictList[i] << "found at: " << found << endl;
+				//then reverse and check right to left, then move to the next row
+				reverse(temp.begin(), temp.end());
+				//cout << temp << endl;
+
+				temp.find(wordToFind);
+				found = temp.find(wordToFind);
+				if (found != string::npos)
+					cout << DictList[i] << "found at: " << found << endl;
+			}
+			#pragma endregion
+			
+			if (offsetX == 0)
+			{
+				y = 8;
+				//offsetX = 0;
+				//offsetY--;
+				//cout << "offsetY -1" << endl;
+			}
+			if (offsetY == -9)
+			{
+				break;
+			}
+			temp = "";
+		}
+		///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		 offsetX = 8;
+		 offsetY = 0;
+		 condition = 0;
+		 temp = "";
+		for (int y = 0; y <= 8;)
+		{//y begins at 8
+			int x = 8;
+			y = 0 + offsetY;
+			x = x - offsetX;
+
+			for (x; x >= condition; x--)
+			{//x begins at 0
+
+				//0 = 8 - 8 
+
+				temp += grid[y][x];
+				y++;
+			}
+			if (y > 8)
+			{
+				offsetY = offsetY + 1;
+				condition++;
+			}
+			
+			else if (x < 0)
+				offsetX = offsetX - 1;
+
+#pragma region findwords
 			for (int i = 0; i < DictLength; i++)
 			{
 				string wordToFind = DictList[i];
@@ -246,15 +349,70 @@ bool WordSearch::SolveSimplePuzzleWithSimpleDictionary()
 				if (found != string::npos)
 					cout << DictList[i] << "found at: " << found << endl;
 			}
+#pragma endregion
+
+			if (offsetX <= 0)
+			{
+				
+				y = 0;
+				//offsetX = 0;
+				//offsetY--;
+				//cout << "offsetY -1" << endl;
+			}
+			if (offsetY == 9)
+			{
+				break;
+			}
 			temp = "";
 		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+		//diagonal loops!
+		/*
+		offsetX = 8;
+		offsetY = 0;
+
+		condition = 0;
+		int condition2 = 8;
+		int counter = 0;
+
+		for (int y = counter; y < condition2; y++)
+		{
+			for (int x = 0; x > condition; x--)
+			{
+
+			}
+
+
+			#pragma region findwords
+			for (int i = 0; i < DictLength; i++)
+			{
+				string wordToFind = DictList[i];
+				temp.find(wordToFind);
+
+				size_t found = temp.find(wordToFind);
+
+				if (found != string::npos)
+					cout << DictList[i] << "found at: " << found << endl;
+				//then reverse and check right to left, then move to the next row
+				reverse(temp.begin(), temp.end());
+				//cout << temp << endl;
+
+				temp.find(wordToFind);
+				found = temp.find(wordToFind);
+				if (found != string::npos)
+					cout << DictList[i] << "found at: " << found << endl;
+			}
+#pragma endregion
 
 
 
+		}
+		*/
 
 
 
-
+		temp = "";
 		// Add your solving code here!
 	}
 
