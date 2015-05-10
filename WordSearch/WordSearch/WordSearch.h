@@ -34,5 +34,7 @@ private:
 	const string PUZZLE_NAME;
 	const string DICTIONARY_NAME;
 	string RecursiveAdvancedSearch(int, int, int, int, LetterTree*, string);
+	string RecursiveAdvancedAdvancedSearch(LetterCell*, LetterCell::DIRECTIONS, LetterTree*, string);
+	void WordSearch::DictionarySearch(string, int, int);
 };
 

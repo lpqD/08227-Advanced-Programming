@@ -24,12 +24,12 @@ void main()
 		if (!puzzle.ReadAdvancedDictionary()) throw exception("Cannot read advanced dictionary");
 
 		// Run the simple puzzle grid data structure with the simple dictionary data structure - execute a number of time and then calculate the average time to execute
-		if (puzzle.SolveSimplePuzzleWithSimpleDictionary())
-			puzzle.WriteResults("results_simple_puzzle_simple_dictionary.txt");
+	//	if (puzzle.SolveSimplePuzzleWithSimpleDictionary())
+		//	puzzle.WriteResults("results_simple_puzzle_simple_dictionary.txt");
 
 		// Run the simple puzzle grid data structure with the advanced dictionary data structure - execute a number of time and then calculate the average time to execute
 		if (puzzle.SolveSimplePuzzleWithAdvancedDictionary())
-			puzzle.WriteResults("results_simple_puzzle_advanced_dictionary.txt");
+		    puzzle.WriteResults("results_simple_puzzle_advanced_dictionary.txt");
 
 		// Run the advanced puzzle grid data structure with the simple dictionary data structure - execute a number of time and then calculate the average time to execute
 		if (puzzle.SolveAdvancedPuzzleWithSimpleDictionary())
